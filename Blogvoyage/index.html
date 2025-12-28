@@ -762,77 +762,77 @@
             return item;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchBox = document.getElementById('search-box');
-            searchBox.addEventListener('input', (e) => {
-                const search = e.target.value.toLowerCase();
-                const items = document.querySelectorAll('.country-item');
-                const sections = document.querySelectorAll('.continent-section');
-                
-                if (search === '') {
-                    items.forEach(item => item.style.display = 'flex');
-                    sections.forEach(section => section.style.display = 'block');
-                    return;
-                }
-				const ratingFilter = document.getElementById('rating-filter');
-				ratingFilter.addEventListener('change', (e) => {
-				    const filterValue = e.target.value;
-				    const items = document.querySelectorAll('.country-item');
-				    const sections = document.querySelectorAll('.continent-section');
-    
-				    items.forEach(item => {
-				        const countryName = item.querySelector('.country-name').textContent;
-				        const countryData = visitedCountries[countryName];
+		document.addEventListener('DOMContentLoaded', () => {
+		    const searchBox = document.getElementById('search-box');
+		    searchBox.addEventListener('input', (e) => {
+		        const search = e.target.value.toLowerCase();
+		        const items = document.querySelectorAll('.country-item');
+		        const sections = document.querySelectorAll('.continent-section');
         
-				        if (filterValue === 'all') {
-				            item.style.display = 'flex';
-				        } else if (filterValue === '0') {
-				            // Pays visités sans note
-				            if (countryData && countryData.rating === 0) {
-				                item.style.display = 'flex';
-				            } else {
-				                item.style.display = 'none';
-				            }
-				        } else {
-				            const minRating = parseInt(filterValue);
-				            if (countryData && countryData.rating >= minRating) {
-				                item.style.display = 'flex';
-				                item.parentElement.classList.add('open');
-				            } else {
-				                item.style.display = 'none';
-				            }
-				        }
-				    });
-    
-				    sections.forEach(section => {
-				        const visibleItems = section.querySelectorAll('.country-item[style="display: flex;"]');
-				        if (visibleItems.length === 0) {
-				            section.style.display = 'none';
-				        } else {
-				            section.style.display = 'block';
-				        }
-				    });
-				});
-                
-                items.forEach(item => {
-                    const countryName = item.querySelector('.country-name').textContent.toLowerCase();
-                    if (countryName.includes(search)) {
-                        item.style.display = 'flex';
-                        item.parentElement.classList.add('open');
-                        item.closest('.continent-section').style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-                
-                sections.forEach(section => {
-                    const visibleItems = section.querySelectorAll('.country-item[style="display: flex;"]');
-                    if (visibleItems.length === 0) {
-                        section.style.display = 'none';
-                    }
-                });
-            });
-        });
+		        if (search === '') {
+		            items.forEach(item => item.style.display = 'flex');
+		            sections.forEach(section => section.style.display = 'block');
+		            return;
+		        }
+        
+		        items.forEach(item => {
+		            const countryName = item.querySelector('.country-name').textContent.toLowerCase();
+		            if (countryName.includes(search)) {
+		                item.style.display = 'flex';
+		                item.parentElement.classList.add('open');
+		                item.closest('.continent-section').style.display = 'block';
+		            } else {
+		                item.style.display = 'none';
+		            }
+		        });
+        
+		        sections.forEach(section => {
+		            const visibleItems = section.querySelectorAll('.country-item[style="display: flex;"]');
+		            if (visibleItems.length === 0) {
+		                section.style.display = 'none';
+		            }
+		        });
+		    });
+
+		    const ratingFilter = document.getElementById('rating-filter');
+		    ratingFilter.addEventListener('change', (e) => {
+		        const filterValue = e.target.value;
+		        const items = document.querySelectorAll('.country-item');
+		        const sections = document.querySelectorAll('.continent-section');
+        
+		        items.forEach(item => {
+		            const countryName = item.querySelector('.country-name').textContent;
+		            const countryData = visitedCountries[countryName];
+            
+		            if (filterValue === 'all') {
+		                item.style.display = 'flex';
+		            } else if (filterValue === '0') {
+		                if (countryData && countryData.rating === 0) {
+		                    item.style.display = 'flex';
+		                } else {
+		                    item.style.display = 'none';
+		                }
+		            } else {
+		                const minRating = parseInt(filterValue);
+		                if (countryData && countryData.rating >= minRating) {
+		                    item.style.display = 'flex';
+		                    item.parentElement.classList.add('open');
+		                } else {
+		                    item.style.display = 'none';
+		                }
+		            }
+		        });
+        
+		        sections.forEach(section => {
+		            const visibleItems = section.querySelectorAll('.country-item[style="display: flex;"]');
+		            if (visibleItems.length === 0) {
+		                section.style.display = 'none';
+		            } else {
+		                section.style.display = 'block';
+		            }
+		        });
+		    });
+		});
 
         function toggleCountry(countryName, isVisited) {
             if (isVisited) {
